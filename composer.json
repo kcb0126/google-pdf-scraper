@@ -1,6 +1,6 @@
 {
   "name": "tiefan/google-pdf-scraper",
-  "description": "A php library to filter pdf document in google driver for Daniel Fischl",
+  "description": "A php library to filter pdf documents in google driver for Daniel Fischl",
   "require": {
     "php": "^7.2"
   }
