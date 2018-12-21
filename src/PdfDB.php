@@ -91,24 +91,27 @@ class PdfDB
                 $id = $row['id'];
                 $url = $row['url'];
 
-                $fmt = 'NULL';
-                $excd = 'NULL';
+                $fmt = '';
+                $excd = '';
 
                 $scraper = new PdfScraper($url);
 
                 foreach ($this->formats as $format) {
                     if($scraper->checkKeywords($format['begin'], $format['end'])) {
-                        $fmt = $format['format'];
+                        $fmt .= $format['format'] . ' ';
                         break;
                     }
                 }
 
                 foreach ($this->ex_codes as $ex_code) {
                     if($scraper->checkKeywords($ex_code['begin'], $ex_code['end'])) {
-                        $excd = $ex_code['ex_code'];
+                        $excd .= $ex_code['ex_code'] . ' ';
                         break;
                     }
                 }
+
+                if($fmt === '') $fmt = 'NULL';
+                if($excd === '') $excd = 'NULL';
 
                 if($fmt !== 'NULL' || $excd !== 'NULL') {
                     $query = str_replace(
