@@ -58,12 +58,20 @@ class PdfDB
         }
     }
 
+    /**
+     * PdfDB constructor.
+     * @param string $host
+     * @param string $username
+     * @param string $password
+     * @param string $database
+     * @throws \Exception
+     */
     public function __construct(string $host, string $username, string $password, string $database)
     {
         $this->db_connection = new mysqli($host, $username, $password, $database);
 
         if($this->db_connection->connect_errno) {
-            throw new Exception("MySQL Connection Error");
+            throw new \Exception("MySQL Connection Error");
         }
     }
 

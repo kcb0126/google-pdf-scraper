@@ -14,8 +14,7 @@
     "google/apiclient": "^2.0",
     "smalot/pdfparser": "^0.13.2",
     "ext-mysqli": "*",
-    "ext-json": "*",
-    "ext-mysql_xdevapi": "*"
+    "ext-json": "*"
   },
   "license": "MIT",
   "autoload": {
