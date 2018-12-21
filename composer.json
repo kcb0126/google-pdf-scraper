@@ -12,7 +12,10 @@
   "require": {
     "php": "^7.2",
     "google/apiclient": "^2.0",
-    "smalot/pdfparser": "^0.13.2"
+    "smalot/pdfparser": "^0.13.2",
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ext-mysql_xdevapi": "*"
   },
   "license": "MIT",
   "autoload": {

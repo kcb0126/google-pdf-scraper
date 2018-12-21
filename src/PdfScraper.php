@@ -54,6 +54,19 @@ class PdfScraper
         return self::textFromDriveId($fileId);
     }
 
+    private static function checkKeywordsFromText(string $text, string $begin, string $end = null)
+    {
+        $beginPos = strpos($text, $begin);
+
+        if(is_null($end)) {
+            return $beginPos !== false;
+        }
+
+        $endPos = strrpos($text, $end);
+
+        return $beginPos && $endPos && ($beginPos <= $endPos);
+    }
+
     /**
      * @param string $fileId
      * @param string $begin
@@ -65,15 +78,7 @@ class PdfScraper
         try {
             $text = self::textFromDriveId($fileId);
 
-            $beginPos = strpos($text, $begin);
-
-            if(is_null($end)) {
-                return $beginPos !== false;
-            }
-
-            $endPos = strrpos($text, $end);
-
-            return $beginPos && $endPos && ($beginPos <= $endPos);
+            return self::checkKeywordsFromText($text, $begin, $end);
 
         } catch (\Google_Exception $e) {
             return false;
@@ -132,4 +137,32 @@ class PdfScraper
         return $id;
     }
 
+    /**
+     * @var string $text
+     */
+    private $text;
+
+    /**
+     * PdfScraper constructor.
+     * @param string $doc
+     * @param bool $isURL
+     * @throws \Google_Exception
+     */
+    public function __construct(string $doc, $isURL = true)
+    {
+        if($isURL) {
+            $this->text = self::textFromDriveUrl($doc);
+        } else {
+            $this->text = self::textFromDriveId($doc);
+        }
+    }
+
+    /**
+     * @param string $begin
+     * @param string|null $end
+     * @return bool
+     */
+    public function checkKeywords(string $begin, string $end = null) {
+        return self::checkKeywordsFromText($this->text, $begin, $end);
+    }
 }
