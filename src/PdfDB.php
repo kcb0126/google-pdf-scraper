@@ -103,10 +103,12 @@ class PdfDB
                     }
                 }
 
-                foreach ($this->ex_codes as $ex_code) {
-                    if($scraper->checkKeywords($ex_code['begin'], $ex_code['end'])) {
-                        $excd .= $ex_code['ex_code'] . ' ';
-                        break;
+                if($fmt !== '') {
+                    foreach ($this->ex_codes as $ex_code) {
+                        if($scraper->checkKeywords($ex_code['begin'], $ex_code['end'])) {
+                            $excd .= $ex_code['ex_code'] . ' ';
+                            break;
+                        }
                     }
                 }
 
