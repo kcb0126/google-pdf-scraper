@@ -17,5 +17,6 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {"Tiefan\\PdfScraper\\": "src/"}
-  }
+  },
+  "minimum-stability": "dev"
 }
