@@ -15,7 +15,6 @@
     "smalot/pdfparser": "^0.13.2"
   },
   "autoload": {
-    "psr-4": {"Tiefan\\PdfScraper": "src/"}
-  },
-  "minimum-stability": "dev"
+    "psr-4": {"Tiefan\\PdfScraper\\": "src/"}
+  }
 }
