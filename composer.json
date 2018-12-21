@@ -1,7 +1,21 @@
 {
   "name": "tiefan/google-pdf-scraper",
   "description": "A php library to filter pdf documents in google driver for Daniel Fischl",
+  "keywords": ["Google Docs", "PDF", "Scraping", "Keywords"],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Wu R.",
+      "email": "tiefan0126@gmail.com"
+    }
+  ],
   "require": {
-    "php": "^7.2"
+    "php": "^7.2",
+    "google/apiclient": "^2.0",
+    "smalot/pdfparser": "^0.13.2",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {"Tiefan\\PdfScraper": "src/"}
   }
 }
