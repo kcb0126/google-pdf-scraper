@@ -15,6 +15,9 @@ use Smalot\PdfParser\Parser;
 
 class PdfScraper
 {
+    private static $client = null;
+    private static $service = null;
+
     /**
      * @param string $fileId
      * @return string
@@ -23,8 +26,8 @@ class PdfScraper
      */
     public static function textFromDriveId(string $fileId)
     {
-        $client = static::getClient();
-        $service = new Google_Service_Drive($client);
+        $client = $client ?? static::getClient();
+        $service = $service ?? new Google_Service_Drive($client);
 
         /**
          * @var Response $response

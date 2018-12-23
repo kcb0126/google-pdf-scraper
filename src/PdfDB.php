@@ -77,7 +77,6 @@ class PdfDB
 
     /**
      * @return int
-     * @throws \Google_Exception
      */
     public function checkPdfs()
     {
@@ -94,7 +93,11 @@ class PdfDB
                 $fmt = '';
                 $excd = '';
 
-                $scraper = new PdfScraper($url);
+                try {
+                    $scraper = new PdfScraper($url);
+                } catch (\Google_Exception $e) {
+                    continue;
+                }
 
                 foreach ($this->formats as $format) {
                     if($scraper->checkKeywords($format['begin'], $format['end'])) {
