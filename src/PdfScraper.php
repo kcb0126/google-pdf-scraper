@@ -26,13 +26,13 @@ class PdfScraper
      */
     public static function textFromDriveId(string $fileId)
     {
-        $client = $client ?? static::getClient();
-        $service = $service ?? new Google_Service_Drive($client);
+        self::$client = self::$client ?? static::getClient();
+        self::$service = self::$service ?? new Google_Service_Drive(self::$client);
 
         /**
          * @var Response $response
          */
-        $response  = $service->files->get($fileId, array('alt' => 'media'));
+        $response  = self::$service->files->get($fileId, array('alt' => 'media'));
         $content = $response->getBody()->getContents();
 
 
