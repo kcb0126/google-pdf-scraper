@@ -59,11 +59,16 @@ class PdfScraper
 
     private static function checkKeywordsFromText(string $text, string $begin, string $end = null)
     {
+        $text = preg_replace('/[^a-zA-Z0-9]/', '', $text);
+        $begin = preg_replace('/[^a-zA-Z0-9]/', '', $begin);
+
         $beginPos = strpos($text, $begin);
 
         if(is_null($end)) {
             return $beginPos !== false;
         }
+
+        $end = preg_replace('/[^a-zA-Z0-9]/', '', $end);
 
         $endPos = strrpos($text, $end);
 
