@@ -101,14 +101,14 @@ class PdfDB
 
                 foreach ($this->formats as $format) {
                     if($scraper->checkKeywords($format['begin'], $format['end'])) {
-                        $fmt .= $format['format'] . ' ';
+                        $fmt .= $format['format'] . ';';
                     }
                 }
 
                 if($fmt !== '') {
                     foreach ($this->ex_codes as $ex_code) {
                         if($scraper->checkKeywords($ex_code['begin'], $ex_code['end'])) {
-                            $excd .= $ex_code['ex_code'] . ' ';
+                            $excd .= $ex_code['ex_code'] . ';';
                         }
                     }
                 }
