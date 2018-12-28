@@ -100,15 +100,17 @@ class PdfDB
                 }
 
                 foreach ($this->formats as $format) {
-                    if($scraper->checkKeywords($format['begin'], $format['end'])) {
-                        $fmt .= $format['format'] . ';';
+                    $pageNumbers = $scraper->checkKeywords($format['begin'], $format['end']);
+                    foreach($pageNumbers as $pageNumber) {
+                        $fmt .= "page$pageNumber: {$format['format']}; ";
                     }
                 }
 
                 if($fmt !== '') {
                     foreach ($this->ex_codes as $ex_code) {
-                        if($scraper->checkKeywords($ex_code['begin'], $ex_code['end'])) {
-                            $excd .= $ex_code['ex_code'] . ';';
+                        $pageNumbers = $scraper->checkKeywords($ex_code['begin'], $ex_code['end']);
+                        foreach($pageNumbers as $pageNumber) {
+                            $excd .= "page$pageNumber: {$ex_code['ex_code']}; ";
                         }
                     }
                 }

@@ -11,6 +11,7 @@ namespace Tiefan\PdfScraper;
 use Google_Client;
 use Google_Service_Drive;
 use GuzzleHttp\Psr7\Response;
+use Smalot\PdfParser\Document;
 use Smalot\PdfParser\Parser;
 
 class PdfScraper
@@ -20,11 +21,11 @@ class PdfScraper
 
     /**
      * @param string $fileId
-     * @return string
+     * @return Document
      * @throws \Google_Exception
      * @throws \Exception
      */
-    public static function textFromDriveId(string $fileId)
+    public static function documentFromDriveId(string $fileId)
     {
         self::$client = self::$client ?? static::getClient();
         self::$service = self::$service ?? new Google_Service_Drive(self::$client);
@@ -38,23 +39,21 @@ class PdfScraper
 
         $PdfParser = new Parser();
 
-        $pdf = $PdfParser->parseContent($content);
+        $document = $PdfParser->parseContent($content);
 
-        $text = $pdf->getText();
-
-        return $text;
+        return $document;
     }
 
     /**
      * @param string $url
-     * @return string
+     * @return Document
      * @throws \Google_Exception
      */
-    public static function textFromDriveUrl(string $url)
+    public static function documentFromDriveUrl(string $url)
     {
         $fileId = static::fileIdFromUrl($url);
 
-        return self::textFromDriveId($fileId);
+        return self::documentFromDriveId($fileId);
     }
 
     private static function checkKeywordsFromText(string $text, string $begin, string $end = null)
@@ -79,19 +78,31 @@ class PdfScraper
      * @param string $fileId
      * @param string $begin
      * @param string|null $end
-     * @return bool
+     * @return int[]
      */
     public static function checkKeywordsFromDriveId(string $fileId, string $begin, string $end = null)
     {
         try {
-            $text = self::textFromDriveId($fileId);
+            $document = self::documentFromDriveId($fileId);
 
-            return self::checkKeywordsFromText($text, $begin, $end);
+            $pages = $document->getPages();
+
+            $pageNumbers = [];
+            $pageNo = 1;
+
+            foreach ($pages as $page) {
+                $text = $page->getText();
+                if(self::checkKeywordsFromText($text, $begin, $end)) {
+                    $pageNumbers[] = $pageNo;
+                }
+            }
+
+            return $pageNumbers;
 
         } catch (\Google_Exception $e) {
-            return false;
+            return [];
         } catch (\Exception $e) {
-            return false;
+            return [];
         }
     }
 
@@ -99,7 +110,7 @@ class PdfScraper
      * @param string $url
      * @param string $begin
      * @param string|null $end
-     * @return bool
+     * @return int[]
      */
     public static function checkKeywordsFromDriveUrl(string $url, string $begin, string $end = null)
     {
@@ -146,9 +157,9 @@ class PdfScraper
     }
 
     /**
-     * @var string $text
+     * @var Document $text
      */
-    private $text;
+    private $document;
 
     /**
      * PdfScraper constructor.
@@ -159,18 +170,34 @@ class PdfScraper
     public function __construct(string $doc, $isURL = true)
     {
         if($isURL) {
-            $this->text = self::textFromDriveUrl($doc);
+            $this->document = self::documentFromDriveUrl($doc);
         } else {
-            $this->text = self::textFromDriveId($doc);
+            $this->document = self::documentFromDriveId($doc);
         }
     }
 
     /**
      * @param string $begin
      * @param string|null $end
-     * @return bool
+     * @return int[]
      */
     public function checkKeywords(string $begin, string $end = null) {
-        return self::checkKeywordsFromText($this->text, $begin, $end);
+        try {
+            $pages = $this->document->getPages();
+        } catch (\Exception $e) {
+            return [];
+        }
+
+        $pageNumbers = [];
+        $pageNo = 1;
+
+        foreach ($pages as $page) {
+            $text = $page->getText();
+            if(self::checkKeywordsFromText($text, $begin, $end)) {
+                $pageNumbers[] = $pageNo;
+            }
+        }
+
+        return $pageNumbers;
     }
 }
