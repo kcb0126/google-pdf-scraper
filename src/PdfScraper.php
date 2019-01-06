@@ -197,6 +197,7 @@ class PdfScraper
             if(self::checkKeywordsFromText($text, $begin, $end)) {
                 $pageNumbers[] = $pageNo;
             }
+            $pageNo++;
         }
 
         return $pageNumbers;
