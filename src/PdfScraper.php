@@ -202,4 +202,40 @@ class PdfScraper
 
         return $pageNumbers;
     }
+
+    public function checkExCodes(string $ex_code)
+    {
+        try {
+            $pages = $this->document->getPages();
+        } catch (\Exception $e) {
+            return [];
+        }
+
+        $results = []; //?????????
+        $pageNo = 1;
+
+        foreach ($pages as $page) {
+            $text = $page->getText();
+            $pos = 0;
+            while(true) {
+                $pos = strpos($text, $ex_code, $pos);
+                if($pos) {
+                    $pos += strlen($ex_code);
+                    while(!is_numeric($text[$pos])) {
+                        $pos++;
+                    }
+                    $beginPos = $pos++;
+                    while(is_numeric($text[$pos])) {
+                        $pos++;
+                    }
+                    $code = substr($text, $beginPos, $pos - $beginPos);
+                    $results[] = ['code' => $code, 'page' => $pageNo];
+                    $pageNo++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return $results;
+    }
 }

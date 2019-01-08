@@ -84,9 +84,9 @@ class PdfDB
 
         $count = 0;
 
-        $result = $this->db_connection->query(self::SQL_DOCUMENT_GET_ALL);
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
+        $sqlresult = $this->db_connection->query(self::SQL_DOCUMENT_GET_ALL);
+        if($sqlresult->num_rows > 0) {
+            while($row = $sqlresult->fetch_assoc()) {
                 $id = $row['id'];
                 $url = $row['url'];
 
@@ -108,9 +108,16 @@ class PdfDB
 
                 if($fmt !== '') {
                     foreach ($this->ex_codes as $ex_code) {
-                        $pageNumbers = $scraper->checkKeywords($ex_code['begin'], $ex_code['end']);
-                        foreach($pageNumbers as $pageNumber) {
-                            $excd .= "page$pageNumber: {$ex_code['ex_code']}; ";
+                        $result = $scraper->checkExCodes($ex_code['begin']);
+                        foreach ($result as $res) {
+                            $excd .= "{$ex_code['begin']}: {$res['code']}(page{$res['page']}); ";
+                        }
+                    }
+
+                    if(!is_null($ex_code['end'])) {
+                        $result = $scraper->checkExCodes($ex_code['end']);
+                        foreach ($result as $res) {
+                            $excd .= "{$ex_code['end']}: {$res['code']}(page{$res['page']}); ";
                         }
                     }
                 }
