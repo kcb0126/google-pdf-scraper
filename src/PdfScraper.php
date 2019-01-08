@@ -225,8 +225,17 @@ class PdfScraper
                         $pos++;
                     }
                     $beginPos = $pos++;
+                    $failed = false;
                     while(is_numeric($text[$pos])) {
                         $pos++;
+                        if($pos - $beginPos > 4) {
+                            $failed = true;
+                            break;
+                        }
+                    }
+                    if($failed) {
+                        $pageNo++;
+                        continue;
                     }
                     $code = substr($text, $beginPos, $pos - $beginPos);
                     $results[] = ['code' => $code, 'page' => $pageNo];
