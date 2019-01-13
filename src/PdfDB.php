@@ -18,7 +18,7 @@ class PdfDB
     const SQL_EX_CODE_GET_ALL = "SELECT `id`, `ex_code`, `begin`, `end` FROM `tb_ex_codes`";
     const SQL_DOCUMENT_GET_ALL = "SELECT `id`, `url`, `format`, `ex_code`, `processed` FROM `tb_documents`";
 
-    const SQL_DOCUMENT_UPDATE = "UPDATE `tb_documents` SET `format`='{format}', `ex_code`='{ex_code}' `processed`=1 WHERE `id`={id}";
+    const SQL_DOCUMENT_UPDATE = "UPDATE `tb_documents` SET `format`='{format}', `ex_code`='{ex_code}', `processed`=1 WHERE `id`={id}";
 
     /**
      * @var mysqli $db_connection
