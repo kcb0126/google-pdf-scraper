@@ -11,7 +11,7 @@
  Target Server Version : 100133
  File Encoding         : 65001
 
- Date: 22/12/2018 01:29:06
+ Date: 13/01/2019 18:53:57
 */
 
 SET NAMES utf8mb4;
@@ -26,15 +26,20 @@ CREATE TABLE `tb_documents`  (
   `url` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `format` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `ex_code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `processed` int(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tb_documents
 -- ----------------------------
-INSERT INTO `tb_documents` VALUES (1, 'https://drive.google.com/file/d/1-Fmug3gSar6KKb0KsF4Glsvqfhuge4In/view', NULL, NULL);
-INSERT INTO `tb_documents` VALUES (2, 'https://drive.google.com/file/d/1xJkR2JRYMm0gLcysdTPN3qd5RE7IFDoS/view', NULL, NULL);
-INSERT INTO `tb_documents` VALUES (3, 'https://drive.google.com/file/d/17S7_MJ7p0hBgO3byt6bVfJPy-VYowNnv/view', NULL, NULL);
+INSERT INTO `tb_documents` VALUES (1, 'https://drive.google.com/file/d/108-pg2HwSfyf8D-Yv5kNtkOkoqT1zDnI/view', 'for mat', NULL, NULL);
+INSERT INTO `tb_documents` VALUES (2, 'https://drive.google.com/file/d/1xJkR2JRYMm0gLcysdTPN3qd5RE7IFDoS/view', 'page5: Flood Search; page1: Tax Search; page2: Tax Search; page3: Tideland Search; ', 'BLOCK:: 74(page1); BLOCK:: 74(page2); BLOCK:: 74(page3); Date of Determination: 141(page1); Page: 1(page1); Page: 2(page2); Page: 1(page3); LOT:: 24(page1); LOT:: 24(page2); LOT:: 24(page3); AND: 100(page1); AND: 567256120(page2); AND: 742(page3); AND: 27', NULL);
+INSERT INTO `tb_documents` VALUES (3, 'https://drive.google.com/file/d/17S7_MJ7p0hBgO3byt6bVfJPy-VYowNnv/view', NULL, NULL, NULL);
+INSERT INTO `tb_documents` VALUES (4, 'https://drive.google.com/file/d/108-pg2HwSfyf8D-Yv5kNtkOkoqT1zDnI/view', NULL, NULL, NULL);
+INSERT INTO `tb_documents` VALUES (5, 'https://drive.google.com/file/d/1-Fmug3gSar6KKb0KsF4Glsvqfhuge4In/view', NULL, NULL, NULL);
+INSERT INTO `tb_documents` VALUES (6, 'https://drive.google.com/file/d/17S7_MJ7p0hBgO3byt6bVfJPy-VYowNnv/view', NULL, NULL, NULL);
+INSERT INTO `tb_documents` VALUES (7, 'https://drive.google.com/file/d/1xJkR2JRYMm0gLcysdTPN3qd5RE7IFDoS/view', 'page5: Flood Search; page1: Tax Search; page2: Tax Search; page3: Tideland Search; ', 'BLOCK:: 74(page1); BLOCK:: 74(page2); BLOCK:: 74(page3); Date of Determination: 141(page1); Page: 1(page1); Page: 2(page2); Page: 1(page3); LOT:: 24(page1); LOT:: 24(page2); LOT:: 24(page3); AND: 100(page1); AND: 567256120(page2); AND: 742(page3); AND: 27', NULL);
 
 -- ----------------------------
 -- Table structure for tb_ex_codes
@@ -46,7 +51,7 @@ CREATE TABLE `tb_ex_codes`  (
   `begin` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `end` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tb_ex_codes
@@ -73,7 +78,10 @@ INSERT INTO `tb_ex_codes` VALUES (19, 'EX_Results', 'Findings:', 'Dated:');
 INSERT INTO `tb_ex_codes` VALUES (20, 'EX_Statusdate', 'Date :', 'Time :');
 INSERT INTO `tb_ex_codes` VALUES (21, 'EX_TIDELAND_DATED', 'ACCORDING TO THE TOWN RECORDS DATING', 'Page');
 INSERT INTO `tb_ex_codes` VALUES (22, 'EX_TitleNo', 'Reference #:', 'Order #:');
-INSERT INTO `tb_ex_codes` VALUES (23, 'Legal Description', 'BEGINNING at a point', 'BEGINNING');
+INSERT INTO `tb_ex_codes` VALUES (23, 'EX_Legal', 'BEGINNING at a point', 'BEGINNING');
+INSERT INTO `tb_ex_codes` VALUES (24, 'EX_Lot', 'LOT:', 'BILLING ADDRESS');
+INSERT INTO `tb_ex_codes` VALUES (25, 'EX_Qual', 'QUAL :', 'LOT ADDRESS');
+INSERT INTO `tb_ex_codes` VALUES (26, 'EX_Party2', 'ASSESSED OWNER:', NULL);
 
 -- ----------------------------
 -- Table structure for tb_formats
@@ -85,7 +93,7 @@ CREATE TABLE `tb_formats`  (
   `begin` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `end` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tb_formats
@@ -105,5 +113,12 @@ INSERT INTO `tb_formats` VALUES (12, 'Tax Search', 'NEW JERSEY TAX & ASSESSMENT 
 INSERT INTO `tb_formats` VALUES (13, 'Tideland Search', 'Tidelands Search Certificate', NULL);
 INSERT INTO `tb_formats` VALUES (14, 'Tideland Search', 'Tidelands Search Certificate', NULL);
 INSERT INTO `tb_formats` VALUES (15, 'Tideland Search', 'TIDELAND SEARCH CERTIFICATE', NULL);
+INSERT INTO `tb_formats` VALUES (16, 'Flood Search', 'NOTICE TO BORROWER ABOUT SPECIAL FLOOD HAZARD AREA STATUS', NULL);
+INSERT INTO `tb_formats` VALUES (17, 'Tideland Search', 'The claim and property lines depicted are a scaled representation and are for informational purposes only. Results are based on the NJ State Tideland Conveyance Maps and are subject to the Tideland Reservation Statement.', NULL);
+INSERT INTO `tb_formats` VALUES (18, 'Policy Format', 'Date of Policy', NULL);
+INSERT INTO `tb_formats` VALUES (19, 'Survey Format', 'SURVEY ENDORSEMENT', NULL);
+INSERT INTO `tb_formats` VALUES (20, 'Policy Format', 'Date ofPolicy:', NULL);
+INSERT INTO `tb_formats` VALUES (21, 'Policy Format', 'Policy No:', NULL);
+INSERT INTO `tb_formats` VALUES (22, 'Policy Format', 'ALTA Owner’s Policy', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
